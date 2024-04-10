@@ -1,9 +1,9 @@
-epiCurve
+Epicurve short presentation
 ================
 Giovanni Marini
 2024-04-10
 
-# epiCurve
+# Background
 
 This is a presentation for the epiCurve function, which can be used to
 interpolate epidemiological curves assuming that the lying force of
@@ -19,7 +19,7 @@ distribution. There are two main assumptions beneath our analysis:
 2.  The FOI has a seasonal pattern. This is the case of many
     vector-borne pathogens at temperate latitudes.
 
-## Modelling details
+# Modelling details
 
 Let us assume we are considering some epidemiological data gathered
 between years $Y_1, ..., Y_n$ in some regions. We denote by $h_{y,i}(w)$
@@ -45,7 +45,7 @@ observed data through a maximum likelihood approach.
 
 For further additional details please see (Marini et al. 2022).
 
-## Loading data
+# Loading data
 
 First of all we load the `tidyverse` library, the functions needed to
 carry out the analysis and our files. More specifically, we need two
@@ -55,8 +55,8 @@ of inhabitants for each considered region.
 ``` r
 library(tidyverse)
 source("epiCurve_functions.R")
-cases_df=read.csv("disease_cases.csv")
-population=read.csv("population.csv")
+cases_df=read.csv("Data/disease_cases.csv")
+population=read.csv("data/population.csv")
 ```
 
 Let’s see how the two CSV files should be:
@@ -111,12 +111,12 @@ hist_week=ggplot(data=cases_df)+
 hist_week
 ```
 
-![](epiCurve-presentation_files/figure-gfm/preliminary_plots-1.png)<!-- -->
+![](README_files/figure-gfm/preliminary_plots-1.png)<!-- -->
 
 So cases are recorded seasonally, which is one of the major requirements
 for our modelling approach.
 
-## Modelling
+# Modelling
 
 We are now going to fit each epidemiological curve $H_{y,i}$ , i.e. each
 set of cases recorded during each year and each region. This is done
@@ -196,7 +196,7 @@ plot(output_model$OBSERVED_TOTAL,output_model$MODEL_TOTAL,
 abline(a=0,b=1)
 ```
 
-![](epiCurve-presentation_files/figure-gfm/fit_quality-1.png)<!-- -->
+![](README_files/figure-gfm/fit_quality-1.png)<!-- -->
 
 So there is quite a good agreement between the two quantities. We can
 also evaluate the average squared error as
@@ -241,9 +241,9 @@ ggplot(df_to_plot,aes(x=WEEK,y=CASES))+
   scale_color_manual(values=c("orchid2","mediumpurple2"))
 ```
 
-![](epiCurve-presentation_files/figure-gfm/curves_comparison-1.png)<!-- -->
+![](README_files/figure-gfm/curves_comparison-1.png)<!-- -->
 
-## References
+# References
 
 Marini, G., Pugliese, A., Wint, W., Alexander, N.S., Rizzoli, A., Rosà,
 R., 2022. Modelling the West Nile virus force of infection in the

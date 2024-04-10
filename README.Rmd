@@ -1,5 +1,5 @@
 ---
-title: "epiCurve"
+title: "Epicurve short presentation"
 author: "Giovanni Marini"
 date: "2024-04-10"
 output: github_document
@@ -9,7 +9,7 @@ output: github_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# epiCurve
+# Background
 
 This is a presentation for the epiCurve function, which can be used to interpolate epidemiological curves assuming that the lying force of infection (FOI, i.e. the rate at which susceptible individuals acquire the infection) can be modelled through the density function of a normal distribution. There are two main assumptions beneath our analysis:
 
@@ -17,7 +17,7 @@ This is a presentation for the epiCurve function, which can be used to interpola
 
 2. The FOI has a seasonal pattern. This is the case of many vector-borne pathogens at temperate latitudes. 
 
-## Modelling details
+# Modelling details
 Let us assume we are considering some epidemiological data gathered between years $Y_1, ..., Y_n$ in some regions. We denote by $h_{y,i}(w)$ the number of recorded cases with region $i$ as place of infection with symptoms onset occurred during week $w$ of year $y$ ($w\in\{1, …, 52\}$, $y\in\{Y_1, ..., Y_n\}$), by $H_{y,i}$ the whole time series, i.e. $H_{y,i}=\bigcup_{w=1}^{52} h_{y,i}(w)$, and by $\sum_{y,i}$ the total number of cases with place of infection identified as i recorded during year y, i.e. $\sum_{y,i}=\sum_{w=1}^{52}h_{y,i}(w)$.
 
 For the analysis, we assume $h_{y,i}(w)$ belongs to a Poisson distribution with average $\sum_{t\in T_W} N_i \cdot \lambda_{y,i}(t)$, where $\lambda_{y,i}(t)$ denotes the FOI in region $i$ and year $y$ at day $t$, $T_W$ represents the set of days in week $w$ and $N_i$ is the number of inhabitants of the region. The FOI is therefore 
@@ -26,7 +26,7 @@ Where $\mu_{y,i}$ and $\sigma_{y,i}$ represent respectively the average and stan
 
 For further additional details please see (Marini et al. 2022).
 
-## Loading data
+# Loading data
 First of all we load the `tidyverse` library, the functions needed to carry out the analysis and our files. More specifically, we need two files, one CSV with the case-based data and another one with the number of inhabitants for each considered region.
 ```{r beginning, message = FALSE}
 library(tidyverse)
@@ -62,7 +62,7 @@ hist_week
 
 So cases are recorded seasonally, which is one of the major requirements for our modelling approach.
 
-## Modelling
+# Modelling
 We are now going to fit each epidemiological curve $H_{y,i}$ , i.e. each set of cases recorded during each year and each region. This is done through the `epi_fit` function, after preparing the appropriate dataset through the `create_dataset` function. In this latter function we specify the name of the raw dataset and the minimum number of total cases for each epidemiological curve to be considered (i.e., we will model only those curves with $\sum_{y,i}\geq$`minimum_cases`). For our example we set `minimum_cases=5`.
 
 The variable `run_fit` specified whether we want to run the fit. If we already did this part we can set it to `FALSE` as we already have the output saved in the specified CSV file.
@@ -132,5 +132,5 @@ ggplot(df_to_plot,aes(x=WEEK,y=CASES))+
   scale_color_manual(values=c("orchid2","mediumpurple2"))
 ```
 
-## References
+# References
 Marini, G., Pugliese, A., Wint, W., Alexander, N.S., Rizzoli, A., Rosà, R., 2022. Modelling the West Nile virus force of infection in the European human population. One Health 15, 100462. https://doi.org/10.1016/j.onehlt.2022.100462
