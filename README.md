@@ -19,16 +19,19 @@ distribution. There are two main assumptions beneath our analysis:
 2.  The FOI has a seasonal pattern. This is the case of many
     vector-borne pathogens at temperate latitudes.
 
+This modelling approach was first presented in (Marini et al. 2022).
+
 # Modelling details
 
 Let us assume we are considering some epidemiological data gathered
-between years $Y_1, ..., Y_n$ in some regions. We denote by $h_{y,i}(w)$
-the number of recorded cases with region $i$ as place of infection with
-symptoms onset occurred during week $w$ of year $y$ ($w\in\{1, …, 52\}$,
-$y\in\{Y_1, ..., Y_n\}$), by $H_{y,i}$ the whole time series,
-i.e. $H_{y,i}=\bigcup_{w=1}^{52} h_{y,i}(w)$, and by $\sum_{y,i}$ the
-total number of cases with place of infection identified as i recorded
-during year y, i.e. $\sum_{y,i}=\sum_{w=1}^{52}h_{y,i}(w)$.
+between $n$ years $Y_1, ..., Y_n$ in some regions. We denote by
+$h_{y,i}(w)$ the number of recorded cases with region $i$ as place of
+infection with symptoms onset occurred during week $w$ of year $y$
+($w\in\{1, …, 52\}$, $y\in\{Y_1, ..., Y_n\}$), by $H_{y,i}$ the whole
+time series, i.e. $H_{y,i}=\bigcup_{w=1}^{52} h_{y,i}(w)$, and by
+$\sum_{y,i}$ the total number of cases with place of infection
+identified as i recorded during year y,
+i.e. $\sum_{y,i}=\sum_{w=1}^{52}h_{y,i}(w)$.
 
 For the analysis, we assume $h_{y,i}(w)$ belongs to a Poisson
 distribution with average $\sum_{t\in T_W} N_i \cdot \lambda_{y,i}(t)$,
@@ -100,8 +103,7 @@ of interest.
 cases_df$ONSET_DATE=as.Date(cases_df$ONSET_DATE)
 
 my_theme=theme(panel.background = element_blank(),
-               axis.title=element_text(size=24), axis.text=element_text(size=16),
-               plot.tag=element_text(size=22))
+               axis.title=element_text(size=20), axis.text=element_text(size=16))
 
 hist_week=ggplot(data=cases_df)+
   geom_bar(aes(x=ONSET_DATE))+
@@ -111,7 +113,7 @@ hist_week=ggplot(data=cases_df)+
 hist_week
 ```
 
-![](README_files/figure-gfm/preliminary_plots-1.png)<!-- -->
+<img src="README_files/figure-gfm/preliminary_plots-1.png" width="100%" style="display: block; margin: auto;" />
 
 So cases are recorded seasonally, which is one of the major requirements
 for our modelling approach.
@@ -196,7 +198,7 @@ plot(output_model$OBSERVED_TOTAL,output_model$MODEL_TOTAL,
 abline(a=0,b=1)
 ```
 
-![](README_files/figure-gfm/fit_quality-1.png)<!-- -->
+<img src="README_files/figure-gfm/fit_quality-1.png" style="display: block; margin: auto;" />
 
 So there is quite a good agreement between the two quantities. We can
 also evaluate the average squared error as
@@ -241,7 +243,7 @@ ggplot(df_to_plot,aes(x=WEEK,y=CASES))+
   scale_color_manual(values=c("orchid2","mediumpurple2"))
 ```
 
-![](README_files/figure-gfm/curves_comparison-1.png)<!-- -->
+<img src="README_files/figure-gfm/curves_comparison-1.png" width="100%" style="display: block; margin: auto;" />
 
 # References
 
