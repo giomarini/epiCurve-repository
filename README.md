@@ -5,11 +5,12 @@ Giovanni Marini
 
 # Background
 
-This is a presentation for the epiCurve function, which can be used to
-interpolate epidemiological curves assuming that the lying force of
-infection (FOI, i.e. the rate at which susceptible individuals acquire
-the infection) can be modelled through the density function of a normal
-distribution. There are two main assumptions beneath our analysis:
+This is a presentation for the epiCurve set of functions, which can be
+used to interpolate epidemiological curves assuming that the lying force
+of infection (FOI, i.e. the rate at which susceptible individuals
+acquire the infection) can be modelled through the density function of a
+normal distribution. There are two main assumptions beneath our
+analysis:
 
 1.  The infection is implicitly modelled by a
     Susceptible-Infected-Susceptible (SIS) model with an external FOI.
@@ -19,7 +20,11 @@ distribution. There are two main assumptions beneath our analysis:
 2.  The FOI has a seasonal pattern. This is the case of many
     vector-borne pathogens at temperate latitudes.
 
-This modelling approach was first presented in (Marini et al. 2022).
+This modelling approach, introduced in (Marini et al. 2022), can
+therefore be used in the case of pathogens such as West Nile virus (WNV)
+or tick-borne encephalitis (TBE). It allows to retrospectively evaluate
+some key epidemiological parameters, namely when the FOI peaks, the
+length of the epidemiological season and the magnitude.
 
 # Modelling details
 
