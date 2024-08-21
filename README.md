@@ -1,7 +1,7 @@
 Epicurve short presentation
 ================
 Giovanni Marini
-2024-04-10
+2024-08-21
 
 # Background
 
@@ -47,9 +47,32 @@ $$\lambda_{y,i} (t)=c_{y,i}\cdot\frac{1}{\sigma_{y,i}\sqrt{2\pi}}e^{-\frac{1}{2}
 Where $\mu_{y,i}$ and $\sigma_{y,i}$ represent respectively the average
 and standard deviation of the distribution and $c_{y,i}$ is a magnitude
 rescaling factor, representing the overall intensity of infections in
-that year and geographical area. These three parameters will be
-estimated by matching the generated epidemiological curve to the
-observed data through a maximum likelihood approach.
+that year and geographical area.
+
+We can see some different realizations for the force of infection
+$\lambda$ obtained with different parameter combinations.
+
+<img src="README_files/figure-gfm/lambda_examples-1.png" width="90%" style="display: block; margin: auto;" />
+
+The timing of the FOI peak depends on the average $\mu$, which indicates
+the Julian day for which $\lambda$ reaches its maximum. for panel a
+$\mu=200$ (July 19) while for panel b we set $\mu=250$ (September 7).
+
+The curve width can depend on $\sigma$ (in orange $\sigma=20$, in blue
+$\sigma=30$): a smaller value corresponds to a steeper curve, if the
+other two parameters do not change. Thus, $\sigma$ provides an estimate
+for the length (in days) of the epidemiological season.
+
+Finally, parameter $c$ by definition rescales the whole curve, hence it
+can be interpreted as a measure of the FOI magnitude. Dashed lines
+(higher values) are obtained with $c=0.01$ while continuous lines with
+$c=0.001$. It is thus clear that the total number of expected infections
+depends directly on $c$, while $\mu$ and $\sigma$ can be regarded as
+parameters concerning the timing of infections.
+
+These three parameters will be estimated by matching the generated
+epidemiological curve to the observed data through a maximum likelihood
+approach.
 
 For further additional details please see (Marini et al. 2022).
 
@@ -160,13 +183,13 @@ output_model=read.csv("normal_FOI_fit.csv",header=T)
 head(output_model)
 ```
 
-    ##   REGIONS YEAR POPULATION OBSERVED_TOTAL MODEL_TOTAL     MU    SD       C_NORM
-    ## 1       a 2010     100374             34          33 229.68 23.69 0.0003376378
-    ## 2       a 2011     100374             31          30 234.32 18.72 0.0003081435
-    ## 3       a 2012     100374             32          37 218.67 23.28 0.0003808616
-    ## 4       a 2013     100374             24          20 231.93 12.58 0.0002037438
-    ## 5       a 2014     100374             39          39 239.52 18.03 0.0003935380
-    ## 6       a 2015     100374             33          38 227.90 25.68 0.0004088476
+    ##   REGIONS YEAR POPULATION OBSERVED_TOTAL MODEL_TOTAL  MU    SD       C_NORM
+    ## 1       a 2010     100374             34          33 230 23.69 0.0003376378
+    ## 2       a 2011     100374             31          30 234 18.72 0.0003081435
+    ## 3       a 2012     100374             32          37 219 23.28 0.0003808616
+    ## 4       a 2013     100374             24          20 232 12.58 0.0002037438
+    ## 5       a 2014     100374             39          39 240 18.03 0.0003935380
+    ## 6       a 2015     100374             33          38 228 25.68 0.0004088476
 
 So each line represents a particular epidemiological curve $H_{y,i}$ as
 specified by the region and year (first two columns). The third column

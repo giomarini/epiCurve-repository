@@ -1,7 +1,7 @@
 ---
 title: "Epicurve short presentation"
 author: "Giovanni Marini"
-date: "2024-04-10"
+date: "2024-08-21"
 output: github_document
 ---
 
@@ -24,7 +24,78 @@ Let us assume we are considering some epidemiological data gathered between $n$ 
 
 For the analysis, we assume $h_{y,i}(w)$ belongs to a Poisson distribution with average $\sum_{t\in T_W} N_i \cdot \lambda_{y,i}(t)$, where $\lambda_{y,i}(t)$ denotes the FOI in region $i$ and year $y$ at day $t$, $T_W$ represents the set of days in week $w$ and $N_i$ is the number of inhabitants of the region. The FOI is therefore 
 $$\lambda_{y,i} (t)=c_{y,i}\cdot\frac{1}{\sigma_{y,i}\sqrt{2\pi}}e^{-\frac{1}{2}\left( \frac{t-\mu_{y,i}}{\sigma_{y,i}}\right)^2}.$$
-Where $\mu_{y,i}$ and $\sigma_{y,i}$ represent respectively the average and standard deviation of the distribution and $c_{y,i}$ is a magnitude rescaling factor, representing the overall intensity of infections in that year and geographical area. These three parameters will be estimated by matching the generated epidemiological curve to the observed data through a maximum likelihood approach. 
+Where $\mu_{y,i}$ and $\sigma_{y,i}$ represent respectively the average and standard deviation of the distribution and $c_{y,i}$ is a magnitude rescaling factor, representing the overall intensity of infections in that year and geographical area. 
+
+We can see some different realizations for the force of infection $\lambda$ obtained with different parameter combinations. 
+
+```{r lambda_examples, include=T, out.width="90%", fig.align = 'center',echo=FALSE,message=FALSE,warning=FALSE}
+library(tidyverse)
+library(gridExtra)
+scientific_10 <- function(x) {
+  output=c(0)
+  for(i in 2:length(x))
+    output=c(output,parse(text=gsub("e", " %.% 10^", scales::scientific_format()(x[i]))))
+  output
+}
+
+giorni=1:364
+C_to_plot=c(0.001,0.01)
+media_to_plot=c(200,250)
+sd_to_plot=c(20,30)
+plot_df=data.frame(DAY=NA,MU=NA,SIGMA=NA,C=NA,lambda=NA)
+for(c_FOI in C_to_plot){
+  for(media_FOI in media_to_plot){
+    for(sd_FOI in sd_to_plot){
+      FOI_to_test=c_FOI*dnorm(giorni, mean = media_FOI, sd = sd_FOI)
+      tmp=data.frame(DAY=giorni,MU=rep(media_FOI,length(giorni)),
+                     SIGMA=rep(sd_FOI,length(giorni)),
+                     C=rep(c_FOI,length(giorni)),
+                     lambda=FOI_to_test)
+      plot_df=rbind(plot_df,tmp)
+    }
+  }
+}
+plot_df=na.omit(plot_df)
+plot_df$MU=as.factor(plot_df$MU)
+plot_df$SIGMA=as.factor(plot_df$SIGMA)
+plot_df$C=as.factor(plot_df$C)
+
+p1=ggplot(data=subset(plot_df,MU==media_to_plot[1]),aes(x=DAY,y=lambda,group=interaction(SIGMA,C,MU),
+                                           colour=SIGMA,linetype=C))+
+  geom_line(size=2)+
+  scale_x_continuous(breaks=seq(0,max(giorni),40),labels=seq(0,max(giorni),40))+
+  labs(x="Day",y=expression(lambda),tag="a")+
+  geom_vline(xintercept=media_to_plot[1], linetype="dashed")+
+  scale_color_manual(values=c("darkorange","darkblue"))+
+  scale_y_continuous(labels = scientific_10)+
+  theme(panel.background = element_blank(),
+               axis.title=element_text(size=24), axis.text=element_text(size=18),
+               plot.tag=element_text(size=22),
+        legend.position="none",axis.line=element_line(size=1))
+p2=ggplot(data=subset(plot_df,MU==media_to_plot[2]),aes(x=DAY,y=lambda,group=interaction(SIGMA,C,MU),
+                                           colour=SIGMA,linetype=C))+
+  geom_line(size=2)+
+  scale_x_continuous(breaks=seq(0,max(giorni),40),labels=seq(0,max(giorni),40))+
+  labs(x="Day",y=expression(lambda),tag="b")+
+  geom_vline(xintercept=media_to_plot[2], linetype="dashed")+
+  scale_color_manual(values=c("darkorange","darkblue"))+
+  scale_y_continuous(labels = scientific_10)+
+  theme(panel.background = element_blank(),
+               axis.title=element_text(size=24), axis.text=element_text(size=18),
+               plot.tag=element_text(size=22),
+        legend.position="none",axis.line=element_line(size=1))
+
+grid.arrange(p1,p2,nrow=2)
+```
+
+
+The timing of the FOI peak depends on the average $\mu$, which indicates the Julian day for which $\lambda$ reaches its maximum. for panel a $\mu=200$ (July 19) while for panel b we set $\mu=250$ (September 7). 
+
+The curve width can depend on $\sigma$ (in orange $\sigma=20$, in blue $\sigma=30$): a smaller value corresponds to a steeper curve, if the other two parameters do not change. Thus, $\sigma$ provides an estimate for the length (in days) of the epidemiological season. 
+
+Finally, parameter $c$ by definition rescales the whole curve, hence it can be interpreted as a measure of the FOI magnitude. Dashed lines (higher values) are obtained with $c=0.01$ while continuous lines with $c=0.001$. It is thus clear that the total number of expected infections depends directly on $c$, while $\mu$ and $\sigma$ can be regarded as parameters concerning the timing of infections.
+
+These three parameters will be estimated by matching the generated epidemiological curve to the observed data through a maximum likelihood approach. 
 
 For further additional details please see (Marini et al. 2022).
 
@@ -68,7 +139,7 @@ We are now going to fit each epidemiological curve $H_{y,i}$ , i.e. each set of 
 
 The variable `run_fit` specified whether we want to run the fit. If we already did this part we can set it to `FALSE` as we already have the output saved in the specified CSV file.
 
-```{r model_fit, include=T}
+```{r model_fit, include=T,warning=F}
 output_file_name="normal_FOI_fit.csv"
 minimum_cases=5
 matrix_weekly_cases=create_dataset(minimum_cases, cases_df)

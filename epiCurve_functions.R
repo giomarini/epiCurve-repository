@@ -73,7 +73,7 @@ epi_fit=function(observed_dataset,population_dataset,output_file_name){
       output_model$MODEL_TOTAL[i]=sum(weekly_cases_model,na.rm=T)
       
       output_model$C_NORM[i]=optimized$par[1]
-      output_model$MU[i]=round(optimized$par[2],2)
+      output_model$MU[i]=round(optimized$par[2])
       output_model$SD[i]=round(optimized$par[3],2)
     }
   }
