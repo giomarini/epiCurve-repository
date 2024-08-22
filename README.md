@@ -1,7 +1,7 @@
 Epicurve short presentation
 ================
 Giovanni Marini
-2024-08-21
+22/08/2024
 
 # Background
 
@@ -20,7 +20,7 @@ analysis:
 2.  The FOI has a seasonal pattern. This is the case of many
     vector-borne pathogens at temperate latitudes.
 
-This modelling approach, introduced in (Marini et al. 2022), can
+This modelling approach, introduced in Marini et al. (2022), can
 therefore be used in the case of pathogens such as West Nile virus (WNV)
 or tick-borne encephalitis (TBE). It allows to retrospectively evaluate
 some key epidemiological parameters, namely when the FOI peaks, the
@@ -33,10 +33,10 @@ between $n$ years $Y_1, ..., Y_n$ in some regions. We denote by
 $h_{y,i}(w)$ the number of recorded cases with region $i$ as place of
 infection with symptoms onset occurred during week $w$ of year $y$
 ($w\in\{1, …, 52\}$, $y\in\{Y_1, ..., Y_n\}$), by $H_{y,i}$ the whole
-time series, i.e. $H_{y,i}=\bigcup_{w=1}^{52} h_{y,i}(w)$, and by
+time series, i.e. $H_{y,i}=(h_{y,i}(1), ..., h_{y,i}(52))$, and by
 $\sum_{y,i}$ the total number of cases with place of infection
 identified as i recorded during year y,
-i.e. $\sum_{y,i}=\sum_{w=1}^{52}h_{y,i}(w)$.
+i.e. $\sum_{y,i}=h_{y,i}(1)+h_{y,i}(2)+...+h_{y,i}(52)$.
 
 For the analysis, we assume $h_{y,i}(w)$ belongs to a Poisson
 distribution with average $\sum_{t\in T_W} N_i \cdot \lambda_{y,i}(t)$,
@@ -74,7 +74,8 @@ These three parameters will be estimated by matching the generated
 epidemiological curve to the observed data through a maximum likelihood
 approach.
 
-For further additional details please see (Marini et al. 2022).
+For further additional details please see Marini et al. (2022) and
+Marini et al. (2024).
 
 # Loading data
 
@@ -275,7 +276,26 @@ ggplot(df_to_plot,aes(x=WEEK,y=CASES))+
 
 # References
 
-Marini, G., Pugliese, A., Wint, W., Alexander, N.S., Rizzoli, A., Rosà,
-R., 2022. Modelling the West Nile virus force of infection in the
-European human population. One Health 15, 100462.
-<https://doi.org/10.1016/j.onehlt.2022.100462>
+<div id="refs" class="references csl-bib-body hanging-indent">
+
+<div id="ref-Marini2024" class="csl-entry">
+
+Marini, Giovanni, Mitra B. Drakulovic, Verica Jovanovic, Francesca
+Dagostin, Willy Wint, Valentina Tagliapietra, Milena Vasic, and
+Annapaola Rizzoli. 2024. “Drivers and Epidemiological Patterns of West
+Nile Virus in Serbia.” *Frontiers in Public Health* 12 (July).
+<https://doi.org/10.3389/fpubh.2024.1429583>.
+
+</div>
+
+<div id="ref-Marini2022" class="csl-entry">
+
+Marini, Giovanni, Andrea Pugliese, William Wint, Neil S. Alexander,
+Annapaola Rizzoli, and Roberto Rosà. 2022. “Modelling the West Nile
+Virus Force of Infection in the European Human Population.” *One Health*
+15: 100462.
+https://doi.org/<https://doi.org/10.1016/j.onehlt.2022.100462>.
+
+</div>
+
+</div>
