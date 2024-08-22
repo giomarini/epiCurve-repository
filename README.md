@@ -35,7 +35,7 @@ infection with symptoms onset occurred during week $w$ of year $y$
 ($w\in\{1, …, 52\}$, $y\in\{Y_1, ..., Y_n\}$), by $H_{y,i}$ the whole
 time series, i.e. $H_{y,i}=(h_{y,i}(1), ..., h_{y,i}(52))$, and by
 $\sum_{y,i}$ the total number of cases with place of infection
-identified as i recorded during year y,
+identified as $i$ recorded during year $y$,
 i.e. $\sum_{y,i}=h_{y,i}(1)+h_{y,i}(2)+...+h_{y,i}(52)$.
 
 For the analysis, we assume $h_{y,i}(w)$ belongs to a Poisson
@@ -280,21 +280,19 @@ ggplot(df_to_plot,aes(x=WEEK,y=CASES))+
 
 <div id="ref-Marini2024" class="csl-entry">
 
-Marini, Giovanni, Mitra B. Drakulovic, Verica Jovanovic, Francesca
-Dagostin, Willy Wint, Valentina Tagliapietra, Milena Vasic, and
-Annapaola Rizzoli. 2024. “Drivers and Epidemiological Patterns of West
-Nile Virus in Serbia.” *Frontiers in Public Health* 12 (July).
-<https://doi.org/10.3389/fpubh.2024.1429583>.
+Marini, G., Drakulovic, M.B., Jovanovic, V., Dagostin, F., Wint, W.,
+Tagliapietra, V., Vasic, M., Rizzoli, A., 2024. Drivers and
+epidemiological patterns of west nile virus in serbia. Front. Public
+Health 12. <https://doi.org/10.3389/fpubh.2024.1429583>
 
 </div>
 
 <div id="ref-Marini2022" class="csl-entry">
 
-Marini, Giovanni, Andrea Pugliese, William Wint, Neil S. Alexander,
-Annapaola Rizzoli, and Roberto Rosà. 2022. “Modelling the West Nile
-Virus Force of Infection in the European Human Population.” *One Health*
-15: 100462.
-https://doi.org/<https://doi.org/10.1016/j.onehlt.2022.100462>.
+Marini, G., Pugliese, A., Wint, W., Alexander, N.S., Rizzoli, A., Rosà,
+R., 2022. Modelling the west nile virus force of infection in the
+european human population. One Health 15, 100462.
+<https://doi.org/10.1016/j.onehlt.2022.100462>
 
 </div>
 

@@ -4,6 +4,7 @@ author: "Giovanni Marini"
 date: "`r format(Sys.time(), '%d/%m/%Y')`"
 output: github_document
 bibliography: epicurve_bibliography.bib 
+csl: biblio_style.csl
 ---
 
 ```{r setup, include=FALSE}
@@ -21,7 +22,7 @@ This is a presentation for the epiCurve set of functions, which can be used to i
 This modelling approach, introduced in @Marini2022, can therefore be used in the case of pathogens such as West Nile virus (WNV) or tick-borne encephalitis (TBE). It allows to retrospectively evaluate some key epidemiological parameters, namely when the FOI peaks, the length of the epidemiological season and the magnitude. 
 
 # Modelling details
-Let us assume we are considering some epidemiological data gathered between $n$ years $Y_1, ..., Y_n$ in some regions. We denote by $h_{y,i}(w)$ the number of recorded cases with region $i$ as place of infection with symptoms onset occurred during week $w$ of year $y$ ($w\in\{1, …, 52\}$, $y\in\{Y_1, ..., Y_n\}$), by $H_{y,i}$ the whole time series, i.e. $H_{y,i}=(h_{y,i}(1), ..., h_{y,i}(52))$, and by $\sum_{y,i}$ the total number of cases with place of infection identified as i recorded during year y, i.e. $\sum_{y,i}=h_{y,i}(1)+h_{y,i}(2)+...+h_{y,i}(52)$.
+Let us assume we are considering some epidemiological data gathered between $n$ years $Y_1, ..., Y_n$ in some regions. We denote by $h_{y,i}(w)$ the number of recorded cases with region $i$ as place of infection with symptoms onset occurred during week $w$ of year $y$ ($w\in\{1, …, 52\}$, $y\in\{Y_1, ..., Y_n\}$), by $H_{y,i}$ the whole time series, i.e. $H_{y,i}=(h_{y,i}(1), ..., h_{y,i}(52))$, and by $\sum_{y,i}$ the total number of cases with place of infection identified as $i$ recorded during year $y$, i.e. $\sum_{y,i}=h_{y,i}(1)+h_{y,i}(2)+...+h_{y,i}(52)$.
 
 For the analysis, we assume $h_{y,i}(w)$ belongs to a Poisson distribution with average $\sum_{t\in T_W} N_i \cdot \lambda_{y,i}(t)$, where $\lambda_{y,i}(t)$ denotes the FOI in region $i$ and year $y$ at day $t$, $T_W$ represents the set of days in week $w$ and $N_i$ is the number of inhabitants of the region. The FOI is therefore 
 $$\lambda_{y,i} (t)=c_{y,i}\cdot\frac{1}{\sigma_{y,i}\sqrt{2\pi}}e^{-\frac{1}{2}\left( \frac{t-\mu_{y,i}}{\sigma_{y,i}}\right)^2}.$$
